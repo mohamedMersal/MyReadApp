@@ -19,13 +19,13 @@ return (
           {/* Book Item */}
 
           {shelfBook?.map((bookData, i) => {
-            return(<>
+            return(
             <BookItem
               key={bookData.id}
               book={bookData}
               updateShelf={updateShelf}
             />
-            </>)
+            )
           })}
 
           {/* <BookItem/> */}

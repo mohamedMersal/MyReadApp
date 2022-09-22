@@ -48,7 +48,7 @@ const bookSearch = async () => {
 };
 useEffect(() => {
   bookSearch()
-}, [text]);
+}, [text, searchBooks]);
   // End Search
 
   return (

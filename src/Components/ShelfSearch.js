@@ -7,13 +7,13 @@ return (
   <>
   <ol className="books-grid">
           {searchBooks?.map((book) => {
-            return(<>
+            return(
             <BookItem
               key={book.id}
               book={book}
               updateShelf={updateShelf}
             />
-            </>)
+            )
           })}
           </ol>
   </>
