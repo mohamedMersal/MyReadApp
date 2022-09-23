@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import * as BooksAPI from './BooksAPI';
 import Home from "./Pages/Home";
 import Search from "./Pages/Search";
+import NotFound from "./Pages/NotFound";
 
 function App() {
   const [booksData, setBooksData] = useState([]);
@@ -39,7 +40,7 @@ const bookSearch = async () => {
       });
       return bookSearch
     })
-    if(x.error){
+    if(x.error || text.length === 0){
       setSearchBooks([]);
     } else {
       setSearchBooks(x)
@@ -55,17 +56,25 @@ useEffect(() => {
     <>
     <div className="app">
     <Routes>
-      <Route path={'/'} element={ <Home 
-                                    books={booksData}
-                                    updateShelf={updateShelf}
-                                  /> }/> 
+      <Route 
+        path={'/'} 
+        element={ <Home 
+                  books={booksData}
+                  updateShelf={updateShelf}
+                  /> }/> 
+
       <Route path={'/'} element={ <Home/> }/> 
-      <Route path={'search'} element={ <Search 
-                                        text={text}
-                                        setText={setText}
-                                        searchBooks={searchBooks}
-                                        updateShelf={updateShelf}
-                                        /> }/>     
+
+      <Route 
+        path={'search'} 
+        element={ <Search 
+                  text={text}
+                  setText={setText}
+                  searchBooks={searchBooks}
+                  updateShelf={updateShelf}
+                  /> }/>   
+        
+        <Route path="*" element={ <NotFound/> }/>
     </Routes>
     </div>
 
