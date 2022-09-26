@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import BookItem from '../Components/BookItem';
 import ShelfSearch from '../Components/ShelfSearch';
 
 

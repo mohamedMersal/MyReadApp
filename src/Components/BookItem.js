@@ -1,11 +1,11 @@
-import React from 'react'
+import React from 'react';
+import imemg from '../images/peakpx.jpg';
 
 export default function BookItem({book, updateShelf}) {
   // console.log('bookItem =>', book);
   const changeShelf = (e) => {
     updateShelf(book, e.target.value)
   }
-
   return (
     <>
     <li>
@@ -16,11 +16,11 @@ export default function BookItem({book, updateShelf}) {
             style={{
               width: 128,
               height: 193,
-              backgroundImage: `url(${book.imageLinks.smallThumbnail})`
+              backgroundImage: `url(${book.imageLinks == null || book.imageLinks.smallThumbnail == null? imemg : book.imageLinks.smallThumbnail})`
             }}
           ></div>
           <div className="book-shelf-changer">
-            <select onChange={changeShelf} defaultValue={book.shelf? book.shelf:'none'}>
+            <select onChange={changeShelf} defaultValue={'none'}>
               <option value="none" disabled>Move to...</option>
               <option value="currentlyReading">Currently Reading</option>
               <option value="wantToRead">Want to Read</option>

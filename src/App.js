@@ -25,31 +25,44 @@ function App() {
   // Start Update
   const updateShelf = async (book, nameShelf) => {
     await BooksAPI.update(book, nameShelf);
-     getBooks();
-     
-  };
+    getBooks();
+    bookSearch();
+    };
   // End Update
 
   // Start Search
 const bookSearch = async () => {
+  if(text.length > 0){
+    document.querySelector('.books-grid').style.display = 'flex';
+  }else{
+    document.querySelector('.books-grid').style.display = 'none';
+  }
   if(text) {
     const res = await BooksAPI.search(text);
-    const x = res.map((bookSearch) => {
+    if(res.error == 'empty query'){
+      setSearchBooks([]);
+    } else{
+      const x = res.map((bookSearch) => {
       booksData.forEach((book) =>{
         if(bookSearch.id === book.id) bookSearch.shelf = book.shelf 
       });
       return bookSearch
     })
-    if(x.error || text.length === 0){
+    if(x.error ){
       setSearchBooks([]);
     } else {
       setSearchBooks(x)
     };
   };
+  }
+    
 };
 useEffect(() => {
-  bookSearch()
-}, [text, searchBooks]);
+  bookSearch();
+  return () => {
+
+  }
+  }, [text, searchBooks]);
   // End Search
 
   return (
@@ -62,9 +75,6 @@ useEffect(() => {
                   books={booksData}
                   updateShelf={updateShelf}
                   /> }/> 
-
-      <Route path={'/'} element={ <Home/> }/> 
-
       <Route 
         path={'search'} 
         element={ <Search 
