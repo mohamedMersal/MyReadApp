@@ -1,6 +1,6 @@
 import "./App.css";
 import { Route, Routes } from 'react-router-dom';
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import * as BooksAPI from './BooksAPI';
 import Home from "./Pages/Home";
 import Search from "./Pages/Search";
@@ -9,7 +9,7 @@ import NotFound from "./Pages/NotFound";
 function App() {
   const [booksData, setBooksData] = useState([]);
   const [text, setText] = useState("");
-  const [searchBooks, setSearchBooks] = useState([]);
+  const [boxSearch, setBoxSearch] = useState([]);
 
   // Start Get All Book
   const getBooks = async () => {
@@ -26,7 +26,6 @@ function App() {
   const updateShelf = async (book, nameShelf) => {
     await BooksAPI.update(book, nameShelf);
     getBooks();
-    bookSearch();
     };
   // End Update
 
@@ -36,33 +35,29 @@ const bookSearch = async () => {
     document.querySelector('.books-grid').style.display = 'flex';
   }else{
     document.querySelector('.books-grid').style.display = 'none';
-  }
+  };
   if(text) {
     const res = await BooksAPI.search(text);
-    if(res.error == 'empty query'){
-      setSearchBooks([]);
+    if(res.error === 'empty query'){
+      setBoxSearch([]);
     } else{
       const x = res.map((bookSearch) => {
       booksData.forEach((book) =>{
         if(bookSearch.id === book.id) bookSearch.shelf = book.shelf 
       });
       return bookSearch
-    })
-    if(x.error ){
-      setSearchBooks([]);
+    });
+    if(x.error){
+      setBoxSearch([]);
     } else {
-      setSearchBooks(x)
+      setBoxSearch(x)
     };
   };
-  }
-    
+  };
 };
 useEffect(() => {
   bookSearch();
-  return () => {
-
-  }
-  }, [text, searchBooks]);
+  }, [text, boxSearch]);
   // End Search
 
   return (
@@ -80,7 +75,7 @@ useEffect(() => {
         element={ <Search 
                   text={text}
                   setText={setText}
-                  searchBooks={searchBooks}
+                  boxSearch={boxSearch}
                   updateShelf={updateShelf}
                   /> }/>   
         
