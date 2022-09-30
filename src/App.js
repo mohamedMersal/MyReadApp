@@ -8,8 +8,7 @@ import NotFound from "./Pages/NotFound";
 
 function App() {
   const [booksData, setBooksData] = useState([]);
-  const [text, setText] = useState("");
-  const [boxSearch, setBoxSearch] = useState([]);
+
 
   // Start Get All Book
   const getBooks = async () => {
@@ -29,37 +28,6 @@ function App() {
     };
   // End Update
 
-  // Start Search
-const bookSearch = async () => {
-  if(text.length > 0){
-    document.querySelector('.books-grid').style.display = 'flex';
-  }else{
-    document.querySelector('.books-grid').style.display = 'none';
-  };
-  if(text) {
-    const res = await BooksAPI.search(text);
-    if(res.error === 'empty query'){
-      setBoxSearch([]);
-    } else{
-      const x = res.map((bookSearch) => {
-      booksData.forEach((book) =>{
-        if(bookSearch.id === book.id) bookSearch.shelf = book.shelf 
-      });
-      return bookSearch
-    });
-    if(x.error){
-      setBoxSearch([]);
-    } else {
-      setBoxSearch(x)
-    };
-  };
-  };
-};
-useEffect(() => {
-  bookSearch();
-  }, [text, boxSearch]);
-  // End Search
-
   return (
     <>
     <div className="app">
@@ -71,13 +39,11 @@ useEffect(() => {
                   updateShelf={updateShelf}
                   /> }/> 
       <Route 
-        path={'search'} 
-        element={ <Search 
-                  text={text}
-                  setText={setText}
-                  boxSearch={boxSearch}
-                  updateShelf={updateShelf}
-                  /> }/>   
+        path='search' 
+        element={ <Search
+                    updateShelf={updateShelf}
+                    booksData={booksData}
+                    /> }/>   
         
         <Route path="*" element={ <NotFound/> }/>
     </Routes>
