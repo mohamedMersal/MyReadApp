@@ -20,7 +20,7 @@ export default function BookItem({book, updateShelf}) {
             }}
           ></div>
           <div className="book-shelf-changer">
-            <select onChange={changeShelf} value={book.shelf}>
+            <select onChange={changeShelf} defaultValue={book?.shelf || 'none'}>
               <option value="none" disabled>Move to...</option>
               <option value="currentlyReading">Currently Reading</option>
               <option value="wantToRead">Want to Read</option>
@@ -31,7 +31,7 @@ export default function BookItem({book, updateShelf}) {
         </div>
         <div className="book-title">{book.title}</div>
         <div className="book-authors">{book.authors}</div>
-        <div className="book-authors fw-semibold text-success">{book.shelf? book.shelf : 'none'}</div>
+        <div className="book-authors fw-semibold text-success">{book.shelf}</div>
       </div>
     </li>
     </>

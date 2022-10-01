@@ -22,10 +22,16 @@ function App() {
   // End Get All Book
 
   // Start Update
-  const updateShelf = async (book, nameShelf) => {
-    await BooksAPI.update(book, nameShelf);
-    getBooks();
-    };
+  // const updateShelf = async (book, nameShelf) => {
+  //   await BooksAPI.update(book, nameShelf);
+  //   getBooks();
+  //   };
+  const updateShelf = (book, nameShelf) => {
+      BooksAPI.update(book, nameShelf).then(() => {
+        book.shelf = nameShelf;
+        setBooksData(booksData.filter((b) => b.id !== book.id).concat(book));
+      });
+  };
   // End Update
 
   return (

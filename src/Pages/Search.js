@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import * as BooksAPI from '../BooksAPI';
 import ShelfSearch from '../Components/ShelfSearch';
@@ -30,6 +30,27 @@ export default function Search({updateShelf, booksData}) {
         };
   };
 
+  // useEffect(() => {
+  //   let isActive = true;
+  //   if(searchQuery){
+  //     BooksAPI.search(searchQuery).then(data =>{
+  //       if(data.error){
+  //         setSearchResult([])
+  //       }else{
+  //         if(isActive){
+  //           setSearchResult(data)
+  //           const bookSwitch = data.map((book) => {
+  //             book.shelf = booksData?.find((b) => b.id === booksData.id)?.shelf || 'none';
+  //             return book;
+  //           })
+  //           setSearchResult(bookSwitch)
+  //         }
+  //       }
+  //     })
+  //   }
+  // }, [])
+
+  
   const handleUpdateShelf = async (book, shelf) => {
     updateShelf(book, shelf);
     const newSearchResults = searchResult.map((b) => {
