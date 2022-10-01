@@ -20,12 +20,6 @@ function App() {
     // console.log('App =>', booksData);
   }, []);
   // End Get All Book
-
-  // Start Update
-  // const updateShelf = async (book, nameShelf) => {
-  //   await BooksAPI.update(book, nameShelf);
-  //   getBooks();
-  //   };
   const updateShelf = (book, nameShelf) => {
       BooksAPI.update(book, nameShelf).then(() => {
         book.shelf = nameShelf;
